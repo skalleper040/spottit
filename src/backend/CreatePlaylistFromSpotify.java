@@ -12,10 +12,11 @@ import entity.SpotifySong;
 
 public class CreatePlaylistFromSpotify {
 	private static JSONObject object = null;
-	private static String accessToken = "BQDHxao4TJ7kGqkS_8EZ_ajbdEIZRsABr9dbW8vDBdWoBajR6aW7KiG2K8dDdiICmgeLZiwk0K2p9N_AWjZypitGXTGOYeYTPjBWXTOR6DCfB8eByiB-XgAloimgwT5olEvfWK93z5MBxVIgNkJpmXJt6mLqdpUAqJveKo_a";
+	private String accessToken = "";
 	private SpotifyPlaylist playlist;
 	
-	public String getPlaylist(String playlistId) {
+	public String getPlaylist(String playlistId, String accessToken) {
+		this.accessToken = accessToken;
 		try {
 			object = readJSONfromURL("https://api.spotify.com/v1/playlists/"+playlistId+"/tracks");
 			playlist = new SpotifyPlaylist(playlistId);

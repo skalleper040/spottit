@@ -15,9 +15,8 @@ public class Greetener {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getPlaylist(@QueryParam("id") String playlistId) {
-		CreatePlaylistFromSpotify playlist = new CreatePlaylistFromSpotify();
-		String playlistAsJson = playlist.getPlaylist(playlistId);
+	public String getPlaylist(@QueryParam("id") String playlistId, @QueryParam("accessToken") String accessToken) {
+		String playlistAsJson = new CreatePlaylistFromSpotify().getPlaylist(playlistId, accessToken);
 		return playlistAsJson;
 	}
 }
