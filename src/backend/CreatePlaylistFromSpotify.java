@@ -44,6 +44,7 @@ public class CreatePlaylistFromSpotify {
 	}
 	
 	public int checkResponse (String playlistId, String accessToken) {
+		this.accessToken = accessToken;
 		return readJSONfromURL("https://api.spotify.com/v1/playlists/"+playlistId+"/tracks").getStatus();
 	}
 	
