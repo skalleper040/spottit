@@ -94,4 +94,11 @@ public class Song {
 	}
 	
 	
+	public boolean validate() {
+		if (originalLyrics != null && translatedLyrics != null && gifs != null) {
+			return true;
+		}
+		return false;
+	}
+	
 }

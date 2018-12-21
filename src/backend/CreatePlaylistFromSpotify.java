@@ -18,7 +18,7 @@ public class CreatePlaylistFromSpotify {
 	public String getPlaylist(String playlistId, String accessToken) {
 		this.accessToken = accessToken;
 		try {
-			object = readJSONfromURL("https://api.spotify.com/v1/playlists/"+playlistId+"/tracks");
+			object = readJSONfromURL("https://api.spotify.com/v1/playlists/"+playlistId+"/tracks").getBody().getObject();
 			playlist = new SpotifyPlaylist(playlistId);
 			int playlistSize = object.getJSONArray("items").length();
 
@@ -43,7 +43,11 @@ public class CreatePlaylistFromSpotify {
 		return jsonInString;
 	}
 	
-	public JSONObject readJSONfromURL(String url) {		
+	public int checkResponse (String playlistId, String accessToken) {
+		return readJSONfromURL("https://api.spotify.com/v1/playlists/"+playlistId+"/tracks").getStatus();
+	}
+	
+	public HttpResponse<JsonNode> readJSONfromURL(String url) {		
 		HttpResponse<JsonNode> response = null;
 		try {
 			response = Unirest.get(url)
@@ -51,6 +55,6 @@ public class CreatePlaylistFromSpotify {
 					.header("Accept", "application/json").asJson();
 		} catch (Exception e) {
 		}
-		return response.getBody().getObject();
+		return response;
 	}
 }
