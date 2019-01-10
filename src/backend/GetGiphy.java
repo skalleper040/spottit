@@ -26,7 +26,7 @@ public class GetGiphy {
 
 		String url = "";
 		try {
-				url = (response.getBody().getObject().getJSONObject("data").getJSONObject("images").getJSONObject("fixed_width").getString("url"));	
+				url = (response.getBody().getObject().getJSONObject("data").getJSONObject("images").getJSONObject("downsized_medium").getString("url"));	
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
