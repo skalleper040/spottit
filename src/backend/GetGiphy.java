@@ -13,23 +13,20 @@ public class GetGiphy {
 	
 	public static String getGif(String searchWord) {
 		HttpResponse<JsonNode> response = null;
-		String giphyUrl = "http://api.giphy.com/v1/gifs/random";
+		String giphyUrl = "http://api.giphy.com/v1/gifs/translate";
 		try {
 			response = Unirest.get(giphyUrl)
 					.header("Accept", "application/json")
 					
 					.queryString("api_key", "fMy0JVBAZxlxU02WJjO475CMg8FGTyMy")
-					.queryString("tag", searchWord).asJson();
+					.queryString("s", searchWord).asJson();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 
 		String url = "";
 		try {
-			
-				url = (response.getBody().getObject().getJSONObject("data").getJSONObject("images").getJSONObject("fixed_width").getString("url"));
-				
-			
+				url = (response.getBody().getObject().getJSONObject("data").getJSONObject("images").getJSONObject("fixed_width").getString("url"));	
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
