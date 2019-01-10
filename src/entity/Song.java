@@ -49,7 +49,6 @@ public class Song {
 
 	public void setGiphys() {
 		gifs = GetGiphy.getGifs(this.songName);
-
 	}
 
 	public void setLyrics() {
