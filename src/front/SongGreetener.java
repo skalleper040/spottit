@@ -40,7 +40,7 @@ public class SongGreetener {
 	public Response getSongInfo(@QueryParam("artist") String artist, @QueryParam("title") String title, @QueryParam("trackUri") String trackUri, @QueryParam("coverUri") String coverUri) {
 		JSONObject json = new JSONObject(); // Creates an object used for response-build
 
-		if (artist.length() > 1 || title.length() > 1) { // Check that we got both artist and title to look for
+		if (artist.length() < 1 || title.length() < 1) { // Check that we got both artist and title to look for
 			try {
 				json.put("Status", "error");
 				json.put("Code", 400);
