@@ -13,7 +13,7 @@ public class GetGiphy {
 	
 	public static String getGif(String searchWord) {
 		HttpResponse<JsonNode> response = null;
-		String giphyUrl = "http://api.giphy.com/v1/gifs/search";
+		String giphyUrl = "http://api.giphy.com/v1/gifs/random";
 		try {
 			response = Unirest.get(giphyUrl)
 					.header("Accept", "application/json")
