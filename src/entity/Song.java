@@ -57,11 +57,11 @@ public class Song {
 		// Search for the song on musixmatch
 		JSONObject track = GetLyrics.getTrackId(songName, artist);
 		int status_code = track.optJSONObject("message").optJSONObject("header").optInt("status_code");
-
+		int arraySize = track.optJSONObject("message").optJSONObject("body").optJSONArray("track_list").length();
 		// Check if we got a valid response, if so, try to get the list of lyric versions
-		if(status_code == 200) {
+		if(status_code == 200 && arraySize > 0) {
 			System.out.println(track);
-			int arraySize = track.optJSONObject("message").optJSONObject("body").optJSONArray("track_list").length();
+			
 			String lyrics = "";
 			try {
 
@@ -126,7 +126,7 @@ public class Song {
 
 
 	public boolean validate() {
-		if (originalLyrics != "" && gifs.size() > 0) {
+		if (originalLyrics != null && gifs.size() > 0) {
 			return true;
 		}
 		return false;
