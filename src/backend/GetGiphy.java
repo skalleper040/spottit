@@ -26,10 +26,10 @@ public class GetGiphy {
 
 		String url = "";
 		try {
-			for(int i = 0; i < response.getBody().getObject().getJSONArray("data").length(); i++) {
-				url = (response.getBody().getObject().getJSONArray("data").getJSONObject(i).getJSONObject("images").getJSONObject("fixed_width").getString("url"));
+			
+				url = (response.getBody().getObject().getJSONObject("data").getJSONObject("images").getJSONObject("fixed_width").getString("url"));
 				
-			}
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
