@@ -57,8 +57,9 @@ public class Song {
 		// Search for the song on musixmatch
 		JSONObject track = GetLyrics.getTrackId(songName, artist);
 		int status_code = track.optJSONObject("message").optJSONObject("header").optInt("status_code");
-		int arraySize = track.optJSONObject("message").optJSONObject("body").optJSONArray("track_list").length();
-		// Check if we got a valid response, if so, try to get the list of lyric versions
+		int arraySize = track.optJSONObject("message").optJSONObject("body").optJSONArray("track_list").length(); // Nbr of lyric-versions from musixmatch
+		
+		// Check if we got a valid response and that there is lyrics for the requested song
 		if(status_code == 200 && arraySize > 0) {
 			System.out.println(track);
 			
