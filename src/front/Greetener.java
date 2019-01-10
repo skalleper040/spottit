@@ -14,12 +14,24 @@ import org.json.JSONObject;
 import backend.CreatePlaylistFromSpotify;
 import entity.SpotifyPlaylist;
 
+
+/**
+ * Class that retrieves a playlist from spotify and returns it as Json.
+ * Needs an accesstoken from user to work
+ * @author Oscar
+ *
+ */
 @Path("/playlist")
 public class Greetener {
 
+	/**
+	 * Gets the requested playlist and returns it as JSON
+	 * @param playlistId the spotify playlist to look for
+	 * @param accessToken the accesstoken required for spotify
+	 * @return the playlist in JSON
+	 */
 	@GET
 	@Produces("text/json")
-
 	public Response getPlaylist(@QueryParam("id") String playlistId, @QueryParam("accessToken") String accessToken) {
 		JSONObject json = new JSONObject(); // Creates an object used for response-build
 		System.out.println(accessToken);

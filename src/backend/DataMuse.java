@@ -25,11 +25,8 @@ public class DataMuse {
 				}else {
 					newTitle += newWord +" ";
 				}
-				
 			} catch (Exception e) {
-			}
-			
-			
+			}	
 		}
 		
 		return newTitle;

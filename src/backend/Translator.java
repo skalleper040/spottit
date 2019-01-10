@@ -6,9 +6,20 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 
+
+/**
+ * Class that translates a text to another language
+ *
+ */
 public class Translator {
 
-
+/**
+ * Translates lyrics to another language
+ * @param sl the orignal lanugage
+ * @param tl langague to translate to
+ * @param lyrics the text to translate
+ * @return translated text
+ */
 	public static String translateLyrics(String sl, String tl, String lyrics) {
 		String url = "https://translate.googleapis.com/translate_a/single";
 		HttpResponse<JsonNode> response = null;

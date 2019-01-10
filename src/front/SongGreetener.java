@@ -4,7 +4,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
@@ -17,24 +16,48 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import entity.Song;
 
+
+/**
+ * Class that retrieves a song and returns it with hints for the game
+ * 
+ *
+ */
 @Path("/song")
 public class SongGreetener {
 
-	private String retrieveSong(Song song) {
-		String jsonInString = null;
+	/**
+	 * Fetches a song and returns it with all hints if available, otherwise null
+	 * @param artist artist to look for
+	 * @param title title to look for
+	 * @param trackUri
+	 * @param coverUri
+	 * @return the song with hints or null if something isnt available
+	 */
+	private String retrieveSong(String artist, String title, String trackUri, String coverUri) {
+		Song song = new Song(artist, title, trackUri, coverUri);
+		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
-
+		
+		// Check if all hints required to be playable is available for the song
 		if (song.validate()) {
 			try {
-				jsonInString = mapper.writeValueAsString(song);
+				return mapper.writeValueAsString(song);
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 			}
 		}
-		return jsonInString;
+		return null;
 	}
 
+	/**
+	 * Produces JSON response
+	 * @param artist
+	 * @param title
+	 * @param trackUri
+	 * @param coverUri
+	 * @return
+	 */
 	@GET
 	@Produces("text/json")
 	public Response getSongInfo(@QueryParam("artist") String artist, @QueryParam("title") String title, @QueryParam("trackUri") String trackUri, @QueryParam("coverUri") String coverUri) {
@@ -55,14 +78,9 @@ public class SongGreetener {
 				e.printStackTrace();
 			}
 		}
-		
-		// All good, create a song
-		Song song = new Song(artist, title, trackUri, coverUri);
-		String entity = null;
 
-		if (song.validate()) { // Check that the song got all info it needs to be playable
-			entity = retrieveSong(song);
-		}
+		// All good, try to retrieve a song
+		String entity = retrieveSong(artist, title, trackUri, coverUri);
 
 		if (entity == null) { // If something went wrong with the hints
 			try {

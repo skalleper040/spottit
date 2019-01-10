@@ -17,7 +17,6 @@ public class GetGiphy {
 		try {
 			response = Unirest.get(giphyUrl)
 					.header("Accept", "application/json")
-					
 					.queryString("api_key", "fMy0JVBAZxlxU02WJjO475CMg8FGTyMy")
 					.queryString("s", searchWord).asJson();
 		} catch (Exception e) {
@@ -31,7 +30,6 @@ public class GetGiphy {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return url;
 	}
 

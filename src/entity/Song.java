@@ -14,6 +14,10 @@ import backend.GetLyrics;
 import backend.Translator;
 
 
+/** 
+ * Class that represents a song-object
+ *
+ */
 public class Song {
 	private String artist;
 	private String songName;
@@ -24,6 +28,13 @@ public class Song {
 	private ArrayList<String> gifs;
 	private String newTitle;
 
+	/**
+	 * Constructs a song-object
+	 * @param artist
+	 * @param songName
+	 * @param trackId
+	 * @param albumCoverUrl
+	 */
 	public Song(String artist, String songName, String trackId, String albumCoverUrl) {
 		super();
 		this.artist = artist;
@@ -51,49 +62,27 @@ public class Song {
 		gifs = GetGiphy.getGifs(this.songName);
 	}
 
+	/**
+	 * Fetches lyrics from musixMatch-api
+	 */
 	public void setLyrics() {
 
-		// Search for the song on musixmatch
-		JSONObject track = GetLyrics.getTrackId(songName, artist);
-		int status_code = track.optJSONObject("message").optJSONObject("header").optInt("status_code");
-		int arraySize = track.optJSONObject("message").optJSONObject("body").optJSONArray("track_list").length(); // Nbr of lyric-versions from musixmatch
-		
-		// Check if we got a valid response and that there is lyrics for the requested song
-		if(status_code == 200 && arraySize > 0) {
-			System.out.println(track);
-			
-			String lyrics = "";
-			try {
-
-				// Get the latest version of lyrics
-				long musixMatchId = track.optJSONObject("message").optJSONObject("body").optJSONArray("track_list").getJSONObject(arraySize-1).getJSONObject("track").getInt("track_id");
-				JSONObject jsonLyrics = GetLyrics.getLyricsFromTrackId(musixMatchId);
-				status_code = jsonLyrics.optJSONObject("message").optJSONObject("header").optInt("status_code");
-
-				// If we found lyrics, save it to the object
-				if(status_code == 200) {	
-					lyrics = jsonLyrics.optJSONObject("message").optJSONObject("body").optJSONObject("lyrics").optString("lyrics_body");
-					
-					// Delete the * in the end of the lyrics from musixcmatch
-					if(lyrics.contains("*******")) {
-						int beginIndex = lyrics.indexOf("*******");
-						lyrics = lyrics.substring(0,beginIndex);
-					}
-					this.originalLyrics = lyrics;
-				}
-
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	try {
+		this.originalLyrics = GetLyrics.getLyricsAsString(songName, artist);
+	} catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
 
+	/**
+	 * Translates lyrics
+	 * @param lang the languange to translate the lyrics to
+	 */
 	public void translateLyrics(String lang) {
 		if(originalLyrics != "") {
 			this.translatedLyrics = Translator.translateLyrics("auto", lang, originalLyrics);
 		}
-
 	}
 
 	public void setArtist(String artist) {
@@ -124,7 +113,10 @@ public class Song {
 		this.gifs = gifs;
 	}
 
-
+	/**
+	 * Used to validate if we got all hints needed for the song to be playable
+	 * @return true if the song is playable, false otherwise
+	 */
 	public boolean validate() {
 		if (originalLyrics != null && gifs.size() > 0) {
 			return true;
