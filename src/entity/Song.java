@@ -53,35 +53,39 @@ public class Song {
 	}
 
 	public void setLyrics() {
+
+		// Search for the song on musixmatch
 		JSONObject track = GetLyrics.getTrackId(songName, artist);
-		System.out.println(track);
-		int arraySize = track.optJSONObject("message").optJSONObject("body").optJSONArray("track_list").length();
-		String lyrics = "";
-		try {
-			if(arraySize > 0) {
+		int status_code = track.optJSONObject("message").optJSONObject("header").optInt("status_code");
+
+		// Check if we got a valid response, if so, try to get the list of lyric versions
+		if(status_code == 200) {
+			System.out.println(track);
+			int arraySize = track.optJSONObject("message").optJSONObject("body").optJSONArray("track_list").length();
+			String lyrics = "";
+			try {
+
+				// Get the latest version of lyrics
 				long musixMatchId = track.optJSONObject("message").optJSONObject("body").optJSONArray("track_list").getJSONObject(arraySize-1).getJSONObject("track").getInt("track_id");
-				System.out.println(musixMatchId);
 				JSONObject jsonLyrics = GetLyrics.getLyricsFromTrackId(musixMatchId);
-				String apiLyrics = "This song has no lyrics";
-				if(jsonLyrics != null) {
-					int status_code = jsonLyrics.optJSONObject("message").optJSONObject("header").optInt("status_code");
+				status_code = jsonLyrics.optJSONObject("message").optJSONObject("header").optInt("status_code");
 
-					System.out.println("Status_code " +status_code);
-					if(status_code == 200) {	
-						apiLyrics = jsonLyrics.optJSONObject("message").optJSONObject("body").optJSONObject("lyrics").optString("lyrics_body");	
+				// If we found lyrics, save it to the object
+				if(status_code == 200) {	
+					lyrics = jsonLyrics.optJSONObject("message").optJSONObject("body").optJSONObject("lyrics").optString("lyrics_body");
+					
+					// Delete the * in the end of the lyrics from musixcmatch
+					if(lyrics.contains("*******")) {
+						int beginIndex = lyrics.indexOf("*******");
+						lyrics = lyrics.substring(0,beginIndex);
 					}
-
+					this.originalLyrics = lyrics;
 				}
-				if(apiLyrics.contains("*******")) {
-					int beginIndex = apiLyrics.indexOf("*******");
-					apiLyrics = apiLyrics.substring(0,beginIndex);
-				}
-				this.originalLyrics = apiLyrics;
 
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
@@ -122,7 +126,7 @@ public class Song {
 
 
 	public boolean validate() {
-		if (originalLyrics != null && translatedLyrics != null && gifs != null) {
+		if (originalLyrics != "" && gifs.size() > 0) {
 			return true;
 		}
 		return false;
