@@ -17,7 +17,7 @@ public class GetGiphy {
 		try {
 			response = Unirest.get(url)
 					.header("Accept", "application/json")
-					.queryString("limit", "5")
+					.queryString("limit", "10")
 					.queryString("api_key", "fMy0JVBAZxlxU02WJjO475CMg8FGTyMy")
 					.queryString("q", title).asJson();
 		} catch (Exception e) {

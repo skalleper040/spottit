@@ -27,7 +27,7 @@ public class Translator {
 		
 		try {
 			for(int i = 0; i <response.getBody().getArray().getJSONArray(0).length();i++ ) {	
-				translatedLyrics += response.getBody().getArray().getJSONArray(0).getJSONArray(i).get(0);
+				translatedLyrics += response.getBody().getArray().optJSONArray(0).optJSONArray(i).get(0);
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
