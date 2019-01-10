@@ -42,10 +42,10 @@ public class SongGreetener {
 					.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
 					.build();
 		}
-		return Response.status(403)
+		return Response.status(Response.Status.NOT_FOUND)
+				.entity("Song not found or not all hints for song available")
 				.header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
-				.entity("Status 403")
 				.build();
 	}
 }
