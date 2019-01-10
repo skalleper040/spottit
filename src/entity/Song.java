@@ -66,13 +66,12 @@ public class Song {
 	 * Fetches lyrics from musixMatch-api
 	 */
 	public void setLyrics() {
-
-	try {
-		this.originalLyrics = GetLyrics.getLyricsAsString(songName, artist);
-	} catch (JSONException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+		try {
+			this.originalLyrics = GetLyrics.getLyricsAsString(songName, artist);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
