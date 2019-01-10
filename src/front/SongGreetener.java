@@ -7,6 +7,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -42,8 +45,19 @@ public class SongGreetener {
 					.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
 					.build();
 		}
-		return Response.status(Response.Status.NOT_FOUND)
-				.entity("Song not found or not all hints for song available")
+		
+		// Create an error message and return it if the song isnt available.
+		JSONObject json = new JSONObject();
+		try {
+
+			json.put("Status", "error");
+			json.put("Code", 404);
+			json.put("Message", "Song not found or not all hints for song available");
+		} catch (JSONException e) {
+		}
+		
+		return Response.status(404)
+				.entity(json.toString())
 				.header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
 				.build();
