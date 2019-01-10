@@ -24,9 +24,11 @@ public class SongGreetener {
 		System.out.println("getting a song");
 		Song song = new Song(artist, title, trackUri, coverUri);
 
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+		
 		if (song.validate()) {
-			ObjectMapper mapper = new ObjectMapper();
-			mapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
+
 			String jsonInString = "";
 			try {
 				jsonInString = mapper.writeValueAsString(song);
@@ -43,6 +45,7 @@ public class SongGreetener {
 		return Response.status(403)
 				.header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.entity("Status 403")
 				.build();
 	}
 }
