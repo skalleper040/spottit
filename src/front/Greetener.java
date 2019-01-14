@@ -47,7 +47,7 @@ public class Greetener {
 				return Response.status(responseCode)
 						.entity(json.toString())
 						.header("Access-Control-Allow-Origin", "*")
-						.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+						.header("Access-Control-Allow-Methods", "GET")
 						.build();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -60,7 +60,7 @@ public class Greetener {
 		return Response.ok() //200
 				.entity(playlistAsJson)
 				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.header("Access-Control-Allow-Methods", "GET")
 				.build();
 	}
 }

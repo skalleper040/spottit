@@ -90,7 +90,7 @@ public class SongGreetener {
 				return Response.status(Response.Status.NOT_FOUND)
 						.entity(json.toString())
 						.header("Access-Control-Allow-Origin", "*")
-						.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+						.header("Access-Control-Allow-Methods", "GET")
 						.build();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -101,7 +101,7 @@ public class SongGreetener {
 		return Response.ok()
 				.entity(entity)
 				.header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.header("Access-Control-Allow-Methods", "GET")
 				.build();
 	}
 }
