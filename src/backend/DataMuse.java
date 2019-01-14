@@ -26,8 +26,6 @@ public class DataMuse {
 					String newWord = response.getBody().getArray().optJSONObject(0).optString("word");
 					newTitle += newWord +" ";
 				}
-				
-				
 			} catch (Exception e) {
 			}	
 		}
