@@ -71,7 +71,7 @@ public class SongGreetener {
 				return Response.status(Response.Status.BAD_REQUEST)
 						.entity(json.toString())
 						.header("Access-Control-Allow-Origin", "*")
-						.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+						.header("Access-Control-Allow-Methods", "GET")
 						.build();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
