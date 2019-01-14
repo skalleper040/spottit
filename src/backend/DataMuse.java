@@ -19,7 +19,7 @@ public class DataMuse {
 			try {
 				response = Unirest.get(url)
 						.header("Accept", "application/json").asJson();
-				String newWord = response.getBody().getArray().getJSONObject(0).getString("word");
+				String newWord = response.getBody().getArray().getJSONObject(0).optString("word");
 				if(newWord == null) {
 					newTitle += word +" ";
 				}else {
