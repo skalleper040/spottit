@@ -21,7 +21,7 @@ public class DataMuse {
 						.header("Accept", "application/json").asJson();
 				String newWord = response.getBody().getArray().getJSONObject(0).getString("word");
 				if(newWord.length() < 1) {
-					newTitle = word;
+					newTitle += word;
 				}else {
 					newTitle += newWord +" ";
 				}
